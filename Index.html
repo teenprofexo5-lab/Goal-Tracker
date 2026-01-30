@@ -1,1 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hayat - Personal Growth Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="moon-icon">🌙</div>
+                <h1 class="app-title">Hayat</h1>
+                <p class="app-subtitle">حياة • Your Personal Growth Sanctuary</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn-primary">Enter Dashboard</button>
+                <p class="login-error" id="loginError"></p>
+            </form>
+            <div class="login-footer">
+                <p class="verse">"Indeed, Allah will not change the condition of a people until they change what is in themselves." — Qur'an 13:11</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboardScreen" class="screen">
+        <nav class="navbar">
+            <div class="nav-left">
+                <h2 class="nav-logo">🌙 Hayat</h2>
+                <span class="nav-date" id="currentDate"></span>
+            </div>
+            <div class="nav-right">
+                <button class="icon-btn" id="themeToggle" title="Toggle Theme">
+                    <span class="theme-icon">☀️</span>
+                </button>
+                <button class="icon-btn" id="settingsBtn" title="Settings">⚙️</button>
+                <button class="btn-logout" id="logoutBtn">Logout</button>
+            </div>
+        </nav>
+
+        <main class="dashboard">
+            <!-- Daily Reminder -->
+            <div class="reminder-card" id="dailyReminder">
+                <div class="reminder-content">
+                    <span class="reminder-icon">✨</span>
+                    <p class="reminder-text" id="reminderText"></p>
+                </div>
+            </div>
+
+            <!-- Overview Cards -->
+            <div class="overview-grid">
+                <div class="stat-card financial">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <h3 class="stat-label">Net Balance</h3>
+                        <p class="stat-value" id="netBalance">0 PKR</p>
+                        <p class="stat-change" id="balanceChange">+0 today</p>
+                    </div>
+                </div>
+                <div class="stat-card prayer">
+                    <div class="stat-icon">🕌</div>
+                    <div class="stat-content">
+                        <h3 class="stat-label">Prayer Completion</h3>
+                        <p class="stat-value" id="prayerCompletion">0%</p>
+                        <p class="stat-change" id="prayerStreak">0 day streak</p>
+                    </div>
+                </div>
+                <div class="stat-card fitness">
+                    <div class="stat-icon">🏋️</div>
+                    <div class="stat-content">
+                        <h3 class="stat-label">Fitness Progress</h3>
+                        <p class="stat-value" id="fitnessProgress">0%</p>
+                        <p class="stat-change" id="fitnessStreak">0 workouts this week</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="content-grid">
+                <!-- Goals Section -->
+                <section class="section goals-section">
+                    <div class="section-header">
+                        <h2 class="section-title">🎯 Active Goals</h2>
+                        <button class="btn-secondary" id="addGoalBtn">+ Add Goal</button>
+                    </div>
+                    <div class="goals-container" id="goalsContainer">
+                        <p class="empty-state">No active goals yet. Start by adding your first goal!</p>
+                    </div>
+                </section>
+
+                <!-- Prayer Tracker -->
+                <section class="section prayer-section">
+                    <div class="section-header">
+                        <h2 class="section-title">🕌 Daily Prayers</h2>
+                        <span class="section-badge" id="prayerBadge">0/5</span>
+                    </div>
+                    <div class="prayer-list" id="prayerList">
+                        <!-- Prayer items will be generated by JS -->
+                    </div>
+                    <div class="prayer-stats">
+                        <div class="prayer-stat">
+                            <span>Today</span>
+                            <span id="todayPrayerPercentage">0%</span>
+                        </div>
+                        <div class="prayer-stat">
+                            <span>This Week</span>
+                            <span id="weekPrayerPercentage">0%</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Financial Tracker -->
+                <section class="section financial-section">
+                    <div class="section-header">
+                        <h2 class="section-title">💰 Daily Financial Record</h2>
+                    </div>
+                    <div class="financial-actions">
+                        <button class="btn-success" id="addEarningBtn">+ Add Earning</button>
+                        <button class="btn-danger" id="addExpenseBtn">- Add Expense</button>
+                    </div>
+                    <div class="financial-summary">
+                        <div class="fin-item">
+                            <span class="fin-label">Today's Earnings</span>
+                            <span class="fin-value earning" id="todayEarnings">0 PKR</span>
+                        </div>
+                        <div class="fin-item">
+                            <span class="fin-label">Total Earnings</span>
+                            <span class="fin-value earning" id="totalEarnings">0 PKR</span>
+                        </div>
+                        <div class="fin-item">
+                            <span class="fin-label">Total Expenses</span>
+                            <span class="fin-value expense" id="totalExpenses">0 PKR</span>
+                        </div>
+                        <div class="fin-item highlight">
+                            <span class="fin-label">Net Balance</span>
+                            <span class="fin-value" id="netBalanceDetail">0 PKR</span>
+                        </div>
+                    </div>
+                    <div class="transaction-history" id="transactionHistory">
+                        <h4>Recent Transactions</h4>
+                        <div class="transactions-list" id="transactionsList">
+                            <p class="empty-state">No transactions yet</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fitness Tracker -->
+                <section class="section fitness-section">
+                    <div class="section-header">
+                        <h2 class="section-title">🏋️ Fitness Tracker</h2>
+                    </div>
+                    <div class="fitness-log">
+                        <button class="btn-primary" id="logWorkoutBtn">Log Today's Workout</button>
+                        <div class="fitness-details">
+                            <div class="fitness-item">
+                                <label>Workout Completed Today?</label>
+                                <div class="toggle-group">
+                                    <button class="toggle-btn" data-value="yes" id="workoutYes">Yes</button>
+                                    <button class="toggle-btn" data-value="no" id="workoutNo">No</button>
+                                </div>
+                            </div>
+                            <div class="fitness-item">
+                                <label for="stepsInput">Steps / Minutes</label>
+                                <input type="number" id="stepsInput" placeholder="Enter steps or minutes">
+                            </div>
+                            <div class="fitness-item">
+                                <label for="weightInput">Weight (kg)</label>
+                                <input type="number" step="0.1" id="weightInput" placeholder="Optional">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fitness-summary">
+                        <div class="fit-stat">
+                            <span>Workouts This Week</span>
+                            <span id="weekWorkouts">0/7</span>
+                        </div>
+                        <div class="fit-stat">
+                            <span>Weekly Progress</span>
+                            <span id="weekFitnessProgress">0%</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Weekly Analytics -->
+            <section class="section analytics-section">
+                <div class="section-header">
+                    <h2 class="section-title">📊 Weekly Progress</h2>
+                </div>
+                <div class="analytics-grid" id="analyticsGrid">
+                    <!-- Analytics will be generated by JS -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Goal Modal -->
+    <div id="goalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="goalModalTitle">Add New Goal</h3>
+                <button class="modal-close" id="closeGoalModal">&times;</button>
+            </div>
+            <form id="goalForm">
+                <div class="form-group">
+                    <label for="goalTitle">Goal Title</label>
+                    <input type="text" id="goalTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="goalCategory">Category</label>
+                    <select id="goalCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="financial">💰 Financial</option>
+                        <option value="fitness">🏋️ Fitness</option>
+                        <option value="prayer">🕌 Prayer/Islamic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="goalTarget">Target Value</label>
+                    <input type="number" id="goalTarget" required>
+                </div>
+                <div class="form-group">
+                    <label for="goalDuration">Duration (days)</label>
+                    <select id="goalDuration" required>
+                        <option value="7">7 days</option>
+                        <option value="14">14 days</option>
+                        <option value="30">30 days</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                <div class="form-group" id="customDurationGroup" style="display: none;">
+                    <label for="customDuration">Custom Duration (days)</label>
+                    <input type="number" id="customDuration" min="1">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancelGoalBtn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Goal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Transaction Modal -->
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="transactionModalTitle">Add Transaction</h3>
+                <button class="modal-close" id="closeTransactionModal">&times;</button>
+            </div>
+            <form id="transactionForm">
+                <input type="hidden" id="transactionType">
+                <div class="form-group">
+                    <label for="transactionAmount">Amount (PKR)</label>
+                    <input type="number" id="transactionAmount" required min="0">
+                </div>
+                <div class="form-group">
+                    <label for="transactionNote">Note (optional)</label>
+                    <input type="text" id="transactionNote" placeholder="What was this for?">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancelTransactionBtn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Transaction</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="modal-close" id="closeSettingsModal">&times;</button>
+            </div>
+            <div class="settings-content">
+                <div class="settings-section">
+                    <h4>Change Password</h4>
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Update Password</button>
+                    </form>
+                </div>
+                <div class="settings-section">
+                    <h4>Data Management</h4>
+                    <button class="btn-danger" id="resetDataBtn">Reset All Data</button>
+                    <p class="warning-text">⚠️ This will delete all your goals, transactions, and progress. This action cannot be undone.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
